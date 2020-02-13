@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<ui:composition template="/tema/padraocad.xhtml">
+	<ui:define name="metadata">
+		<f:metadata>
+			<f:viewParam name="usuacao" value="#{usuarioBeans.acao}" />
+                        <f:viewParam name="usucod" value="#{usuarioBeans.id}" />
+
+                        <f:event listener="#{usuarioBeans.carregarCadastro(autenticacaoBean.tokenDTO)}"
+				type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form id="frmUsuCad">
+			<p:panel>
+				<p:toolbar>
+					<f:facet name="left" >
+						<h:outputText value="Usuários" />
+					</f:facet>
+				</p:toolbar>
+                            <h:panelGrid id="pnlUsuCad" columns="2" style="height: 90%">
+                                    <p:column>
+					<p:outputLabel value="Código: " rendered="#{usuarioBeans.acao !='Novo'}"/>
+					<p:inputText size="50" readonly="true" rendered="#{usuarioBeans.acao !='Novo'}"
+						value="#{usuarioBeans.usuarioCadastrado.id}" />
+					<p:outputLabel value="Nome: " />
+					<p:inputText maxlength="30" size="50"
+						value="#{usuarioBeans.usuarioCadastrado.nome}"
+						readonly="#{usuarioBeans.acao == 'Excluir'}">
+						<f:validateBean />
+					</p:inputText>
+					<p:outputLabel value="Email " />
+					<p:inputText maxlength="20" size="50"
+						value="#{usuarioBeans.usuarioCadastrado.email}"
+						readonly="#{usuarioBeans.acao == 'Excluir'}">
+						<f:validateBean />
+					</p:inputText>
+					<p:outputLabel value="Senha: " rendered="#{usuarioBeans.acao =='Novo'}"/>
+                                        <p:password maxlength="20" size="50" rendered="#{usuarioBeans.acao =='Novo'}"
+						value="#{usuarioBeans.usuarioCadastrado.senha}"
+						readonly="#{usuarioBeans.acao == 'Excluir'}">
+						<f:validateBean />
+					</p:password>
+                                    </p:column>
+                                    <p:column>
+                                        <h:form id="frmTelefones">
+                                        <p:outputLabel value="Telefones " style="margin-left: 10%" />
+                                        <p:dataTable emptyMessage="Nenhum telefone encontrado"
+                                                     style="margin-left: 10%"      
+                                               value="#{usuarioBeans.listaTelefones}"
+                                               var="telefone"
+                                               rows="5" paginator="true">
+                                               <f:facet name="footer">
+                                                   <p:button value="Novo" icon="ui-icon-plus"
+                                                        outcome="/telefoneCadastro.xhtml?faces-redirect=true" >
+                                                        <f:param name="foneacao" value="Novo" />
+                                                </p:button>
+                                               </f:facet>
+                                               <p:column headerText="DDD">
+                                                       <h:outputText value="#{telefone.ddd}" />
+                                               </p:column>
+                                               <p:column headerText="Número">
+                                                   <h:outputText value="#{telefone.numero}" />
+                                               </p:column>
+                                               <p:column headerText="Tipo">
+                                                   <h:outputText value="#{telefone.tipoTelefone.name}" />
+                                               </p:column>
+                                               <p:column headerText="Opções" width="100">
+                                                       <p:button icon="ui-icon-trash"
+                                                                outcome="/telefoneCadastro.xhtml?faces-redirect=true">
+                                                                <f:param name="fonecod" value="#{telefone.id}" />
+                                                                <f:param name="foneacao" value="Excluir"/>
+                                                        </p:button>
+                                                        <p:button icon="ui-icon-pencil" 
+                                                                outcome="/telefoneCadastro.xhtml?faces-redirect=true">
+                                                                <f:param name="usucod" value="#{usuarioBeans.usuarioCadastrado.id}" />
+                                                                <f:param name="fonecod" value="#{telefone.id}" />
+                                                                <f:param name="foneacao" value="Editar"/>
+                                                        </p:button>
+                                               </p:column>
+                                       </p:dataTable>
+                                        </h:form>
+                                    </p:column>
+				</h:panelGrid>
+				<h:panelGrid columns="5">
+                                    
+                                    <p:commandButton value="Novo" id="novo"
+                                                action="#{usuarioBeans.novo}"
+						update=":frmUsuCad:pnlUsuCad"
+						rendered="#{usuarioBeans.acao =='Novo'}" />
+                                    
+                                    <p:commandButton  value="Salvar" id="salvar" 
+						actionListener="#{usuarioBeans.salvar(autenticacaoBean.tokenDTO)}"
+                                                update=":msgGlobal :frmUsuCad:pnlUsuCad"
+						rendered="#{usuarioBeans.acao =='Novo'}"/>
+                                        
+					<p:commandButton value="Excluir" id="excluir"
+						action="#{usuarioBeans.excluir(autenticacaoBean.tokenDTO)}" 
+                                                update=":msgGlobal :frmUsuCad:pnlUsuCad"
+						rendered="#{usuarioBeans.acao =='Excluir'}"/>
+                                        
+					<p:commandButton value="Editar" id="editar"
+						action="#{usuarioBeans.editar(autenticacaoBean.tokenDTO)}" 
+                                                update=":msgGlobal"
+                                                rendered="#{usuarioBeans.acao =='Editar'}" />
+                                        
+				</h:panelGrid>
+			</p:panel>
+                    
+                    
+		</h:form>
+	</ui:define>
+</ui:composition>
+</html>

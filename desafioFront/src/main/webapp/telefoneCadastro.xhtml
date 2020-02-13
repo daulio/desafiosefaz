@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+       xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+     
+  <ui:composition template="/tema/padraocad.xhtml">
+       <ui:define name="metadata">
+		<f:metadata>
+                    <f:viewParam name="usucod" value="#{usuarioBeans.id}" />
+                    <f:viewParam name="foneacao" value="#{usuarioBeans.foneacao}" />
+                    <f:viewParam name="fonecod" value="#{usuarioBeans.idTelefone}" />
+                    <f:event listener="#{usuarioBeans.carregarTelefone(autenticacaoBean.tokenDTO)}" type="preRenderView"></f:event>
+		</f:metadata>
+	</ui:define>
+	<ui:define name="conteudo">
+		<h:form>
+			<p:toolbar>
+				<f:facet name="left">
+					<h:outputText value="Autenticação" />
+				</f:facet>
+			</p:toolbar>
+			<h:panelGrid columns="2">
+                                <p:outputLabel value="DDD: " />
+                                <p:inputText maxlength="30" size="50"
+                                    value="#{usuarioBeans.telefone.ddd}"
+                                    readonly="#{usuarioBeans.acao == 'Excluir'}">
+                                    <f:validateBean />
+                                </p:inputText>
+                                <p:outputLabel value="Número: " />
+                                <p:inputText maxlength="20" size="50"
+                                    value="#{usuarioBeans.telefone.numero}">
+                                    <f:validateBean />
+                                </p:inputText>  
+                                <p:outputLabel for="@next" value="Tipo telefone:" />
+                                <p:selectOneMenu id="tipo" value="#{usuarioBeans.tipo}" style="width:125px">
+                                    <f:selectItem itemLabel="RESIDENCIAL" itemValue="RESIDENCIAL" />
+                                    <f:selectItem itemLabel="CELULAR" itemValue="CELULAR" />
+                                    <f:selectItem itemLabel="COMERCIAL" itemValue="COMERCIAL" />
+                                    <f:selectItem itemLabel="RECADO" itemValue=" " />
+                                    
+                                </p:selectOneMenu>
+
+			</h:panelGrid>
+			<h:panelGrid columns="3">
+
+                                    <p:commandButton  value="Salvar" id="salvar" 
+						actionListener="#{usuarioBeans.salvarTelefone(autenticacaoBean.tokenDTO)}"
+                                                update=":msgGlobal"
+						rendered="#{usuarioBeans.foneacao =='Novo'}"/>
+                                        
+					<p:commandButton value="Excluir" id="excluir"
+						action="#{usuarioBeans.excluirTelefone(autenticacaoBean.tokenDTO)}" 
+                                                update=":msgGlobal"
+						rendered="#{usuarioBeans.foneacao =='Excluir'}"/>
+                                        
+					<p:commandButton value="Editar" id="editar"
+						action="#{usuarioBeans.editarTelefone(autenticacaoBean.tokenDTO)}" 
+                                                update=":msgGlobal"
+                                                rendered="#{usuarioBeans.foneacao =='Editar'}" 
+                                                />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
+ </html>
