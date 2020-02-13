@@ -7,8 +7,7 @@ na engenharia de software. Acreditamos que um bom código é um código bem test
 Você poderá adicionar e estender a vontade os requisitos da aplicação.
 
 ### Disponibilizado nas pastas:
-desafioDev - Backend
-desafioDev - Frontend
+desafioDev - Backend e desafioDev - Frontend
 
 ## Desafio para Analista
 
