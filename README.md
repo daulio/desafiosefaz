@@ -8,6 +8,6 @@ Você poderá adicionar e estender a vontade os requisitos da aplicação.
 
 ## Desafio para Analista
 
-Questão 1: Criar um sistema de banco de dados que gerencie 4 entidades...
-Questão 1: Criar um sistema de banco de dados que gerencie 4 entidades...
-Questão 3: Efetuar uma extração que atenda os seguintes requisitos:
+Questão 1: Criar um sistema de banco de dados que gerencie 4 entidades
+Questão 1: Questao 2: Efetuar o povoamento das entidades
+Questão 3: Efetuar uma extração dos dados
