@@ -1,15 +1,15 @@
---Criar uma tabela em memória dos sistemas do usuário, que agrupe por cpf todos
---os sistemas do determinado usuário;
+--Criar uma tabela em memÃ³ria dos sistemas do usuÃ¡rio, que agrupe por cpf todos
+--os sistemas do determinado usuÃ¡rio;
 
 CREATE VIEW V_USUARIOSISTEMA AS
-SELECT U.CPF, S.NOME 
+SELECT U.CPF, S.NOME AS SISTEMA
 FROM USUARIO U 
 INNER JOIN USUARIOSISTEMA US ON U.USUARIOID = US.USUARIOID
 INNER JOIN SISTEMA S ON S.SISTEMAID = US.SISTEMAID
 GROUP BY U.CPF;
 
---Retornar todos os usuários do sistema com o CPF (com máscara), o nome do usuário 
---em caixa alta, bem como os cargos, orgãos e sistemas associados (se existir);
+--Retornar todos os usuÃ¡rios do sistema com o CPF (com mÃ¡scara), o nome do usuÃ¡rio 
+--em caixa alta, bem como os cargos, orgÃ£os e sistemas associados (se existir);
 
 SELECT substr(U.CPF,1,3)||'.'||substr(U.CPF,4,3)||'.'||substr(U.CPF,7,3)||'-'||substr(U.CPF,10,2) AS CPF,
        UPPER(U.NOME) AS NOME_USUARIO,
@@ -22,5 +22,4 @@ INNER JOIN ORGAO O ON U.ORGAOID = O.ORGAOID
 LEFT JOIN USUARIOSISTEMA US ON U.USUARIOID = US.USUARIOID
 LEFT JOIN SISTEMA S ON S.SISTEMAID = US.SISTEMAID;
 
-SELECT UPPER(NM_PACIENTE) FROM PACIENTE WHERE CD_PACIENTE = 2
 
