@@ -147,14 +147,19 @@ public class UsuarioBeans implements Serializable{
     public void salvarTelefone(TokenDTO token){
         telefone.setTipoTelefone(TipoTelefone.getByName(this.tipo));
         listaTelefones.add(telefone);
-        voltar(token, "usuarioCadastro.xhtml");
+        this.usuarioCadastrado.setTelefones(listaTelefones);
+        if(usuarioCadastrado.getId() != null){
+            editarVoltando(token, "usuarioCadastro.xhtml");
+        }else{
+            voltar(token, "usuarioCadastro.xhtml");
+        }
     }
     
-    public void excluir(TokenDTO token){
+    public void excluir(TokenDTO token, Long pId){
         try {
-            if (id != null){
+            if (pId != null){
                 UsuarioService service = new UsuarioService();
-                service.excluir(token, id);
+                service.excluir(token, pId.intValue());
                 FacesUtil.adicionarMsgInfo("Usuário excluído com sucesso!");
                 voltar(token, "principal.xhtml");
             }else{
@@ -165,8 +170,11 @@ public class UsuarioBeans implements Serializable{
 	}        
     }
     
-    public void excluirTelefone(TokenDTO token){
-        this.listaTelefones.remove(telefone);
+    public void excluirTelefone(TokenDTO token, Long pId){
+
+        telefone = getTelefone(pId);
+        listaTelefones.remove(telefone);
+        
         editarVoltando(token, "usuarioCadastro.xhtml");
     }
     
@@ -263,5 +271,12 @@ public class UsuarioBeans implements Serializable{
         }
     }
     
-
+    private TelefoneDTO getTelefone(Long pId){
+        for (TelefoneDTO fone : this.usuarioCadastrado.getTelefones()) {
+            if(fone.getId() == pId){
+                return fone;
+            }
+        }
+        return new TelefoneDTO();
+    }
 }

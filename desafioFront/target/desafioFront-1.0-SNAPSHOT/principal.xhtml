@@ -42,12 +42,8 @@
 					<h:outputText value="#{usuario.email}" />
 				</p:column>
 				<p:column headerText="Opções" width="100">
-					<p:button icon="ui-icon-trash"
-						outcome="/usuarioCadastro.xhtml?faces-redirect=true">
-						<f:param name="usucod" value="#{usuario.id}" />
-						<f:param name="usuacao" value="Excluir"/>
-					</p:button>
-                                    
+                                    <p:commandButton icon="ui-icon-trash" id="excluir" ajax="false"
+						         action="#{usuarioBeans.excluir(autenticacaoBean.tokenDTO, usuario.id)}"/>
 					<p:button icon="ui-icon-pencil" 
 						outcome="/usuarioCadastro.xhtml?faces-redirect=true">
 						<f:param name="usucod" value="#{usuario.id}" />

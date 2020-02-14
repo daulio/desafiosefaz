@@ -11,7 +11,6 @@
 		<f:metadata>
 			<f:viewParam name="usuacao" value="#{usuarioBeans.acao}" />
                         <f:viewParam name="usucod" value="#{usuarioBeans.id}" />
-
                         <f:event listener="#{usuarioBeans.carregarCadastro(autenticacaoBean.tokenDTO)}"
 				type="preRenderView"></f:event>
 		</f:metadata>
@@ -72,11 +71,8 @@
                                                    <h:outputText value="#{telefone.tipoTelefone.name}" />
                                                </p:column>
                                                <p:column headerText="Opções" width="100">
-                                                       <p:button icon="ui-icon-trash"
-                                                                outcome="/telefoneCadastro.xhtml?faces-redirect=true">
-                                                                <f:param name="fonecod" value="#{telefone.id}" />
-                                                                <f:param name="foneacao" value="Excluir"/>
-                                                        </p:button>
+                                                   <p:commandButton icon="ui-icon-trash" id="excluir" ajax="false"
+						         action="#{usuarioBeans.excluirTelefone(autenticacaoBean.tokenDTO, telefone.id)}"/>
                                                         <p:button icon="ui-icon-pencil" 
                                                                 outcome="/telefoneCadastro.xhtml?faces-redirect=true">
                                                                 <f:param name="usucod" value="#{usuarioBeans.usuarioCadastrado.id}" />
